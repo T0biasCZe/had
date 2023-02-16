@@ -23,7 +23,7 @@ namespace mackasmihadadebille {
         static int direction = up; //smer hada
         static int lenght = 1; //delka hada. každe čislo je jedna část hada
         static int ate = 0; //kolik jablek už snedl had
-        static int speed = 500; //"rychlost" hada. čim nižší čislo tim vetši rychlost
+        static int speed = 400; //"rychlost" hada. čim nižší čislo tim vetši rychlost
         static int apple_x; //pozice jableka na ose x
         static int apple_y; //pozice jablka na ose y
         static Vector2[] position = new Vector2[100]; //pole s pozicema hada. vector2 je promena s dvěma čísly. x a y
@@ -44,7 +44,8 @@ namespace mackasmihadadebille {
             if(Vector2.Distance(position[0], new Vector2(apple_x, apple_y)) < 1) {
                 ate++;
                 lenght++;
-                speed -= 25;
+                //speed -= 25;
+                speed = (int)((float)speed * 0.95);
                 apple_x = rnd.Next(0, 20);
                 apple_y = rnd.Next(0, 20);
             }
@@ -72,16 +73,24 @@ namespace mackasmihadadebille {
             printsnake();
             //vytiskne hada
             printapple();
-            //brani inputu z klavesnice a počkani na dalši snímek. aby se nestalo že to nesejme vstup, tak se čekani rozděli na 4 menší části
+            //brani inputu z klavesnice a počkani na dalši snímek. aby se nestalo že to nesejme vstup, tak se čekani rozděli na ¨8 menší části
             takeinput();
-            Thread.Sleep(speed/4);
+            Thread.Sleep(speed/8);
             takeinput();
-            Thread.Sleep(speed / 4);
+            Thread.Sleep(speed / 8);
             takeinput();
-            Thread.Sleep(speed / 4);
+            Thread.Sleep(speed / 8);
             takeinput();
-            Thread.Sleep(speed / 4);
-            
+            Thread.Sleep(speed / 8);
+            takeinput();
+            Thread.Sleep(speed / 8);
+            takeinput();
+            Thread.Sleep(speed / 8);
+            takeinput();
+            Thread.Sleep(speed / 8);
+            takeinput();
+            Thread.Sleep(speed / 8);
+
         }
         public static void takeinput() {
             //sejme inputy s klávesnice, a omezi že novy směr nesmi byt opak stavajiciho směru
@@ -128,10 +137,10 @@ namespace mackasmihadadebille {
                     break;
             }
             //pokud se had dotkne okraje, tak se hra ukonči
-            if(position[0].X == 0) gameover();
-            if(position[0].X == 21) gameover();
-            if(position[0].Y == 0) gameover();
-            if(position[0].Y == 21) gameover();
+            if(position[0].X < 0) gameover();
+            if(position[0].X > 21) gameover();
+            if(position[0].Y < 0) gameover();
+            if(position[0].Y > 21) gameover();
             
 
         }
